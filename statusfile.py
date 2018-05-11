@@ -2,19 +2,27 @@ import time
 import cgi
 
 def esc(str):
-  # Escape special characters for security. TODO: Might need some more work!
-  return cgi.escape(str)
+  try:
+    # Escape special characters for security. TODO: Might need some more work!
+    return cgi.escape(str)
+  except: return 'invalid'
 
 def qrg(freq):
-  return '{:7.4f} kHz'.format(float(freq) / 10**6)
+  try:
+    return '{:7.4f} kHz'.format(float(freq) / 10**6)
+  except: return 'invalid'
 
 def abstime(abstime):
-  return time.asctime(time.localtime(abstime))
+  try:
+    return time.asctime(time.localtime(abstime))
+  except: return 'invalid'
 
 def reltime(abstime):
-  t = float(abstime)
-  if t <= 0: return 'n/a'
-  return '{:6.1f} sec ago'.format(time.time() - t)
+  try:
+    t = float(abstime)
+    if t <= 0: return 'n/a'
+    return '{:6.1f} sec ago'.format(time.time() - t)
+  except: return 'invalid'
 
 def write(logger, config, systemname, clients):
   try:
