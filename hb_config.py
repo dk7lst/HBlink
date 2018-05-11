@@ -51,6 +51,7 @@ def build_config(_config_file):
     CONFIG['LOGGER'] = {}
     CONFIG['ALIASES'] = {}
     CONFIG['AMBE'] = {}
+    CONFIG['STATUSFILE'] = {}
     CONFIG['SYSTEMS'] = {}
 
     try:
@@ -86,6 +87,12 @@ def build_config(_config_file):
                 CONFIG['AMBE'].update({
                     'EXPORT_IP': gethostbyname(config.get(section, 'EXPORT_IP')),
                     'EXPORT_PORT': config.getint(section, 'EXPORT_PORT'),
+                })
+
+            elif section == 'STATUSFILE':
+                CONFIG['STATUSFILE'].update({
+                    'ENABLED': config.getboolean(section, 'ENABLED'),
+                    'FILE': config.get(section, 'FILE'),
                 })
 
             elif config.getboolean(section, 'ENABLED'):

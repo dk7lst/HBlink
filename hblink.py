@@ -48,6 +48,8 @@ import hb_log
 import hb_config
 from dmr_utils.utils import int_id, hex_str_4
 
+import statusfile
+
 # Does anybody read this stuff? There's a PEP somewhere that says I should do this.
 __author__     = 'Cortney T. Buffington, N0MJS'
 __copyright__  = 'Copyright (c) 2016 Cortney T. Buffington, N0MJS and the K0USY Group'
@@ -143,6 +145,7 @@ class HBSYSTEM(DatagramProtocol):
     # Aliased in __init__ to maintenance_loop if system is a master
     def master_maintenance_loop(self):
         self._logger.debug('(%s) Master maintenance loop started', self._system)
+        if self._CONFIG['STATUSFILE']['ENABLED']: statusfile.write(self._logger, self._CONFIG['STATUSFILE'], self._system, self._clients)
         for client in self._clients:
             _this_client = self._clients[client]
             # Check to see if any of the clients have been quiet (no ping) longer than allowed
