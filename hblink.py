@@ -150,6 +150,7 @@ class HBSYSTEM(DatagramProtocol):
                 self._logger.info('(%s) Client %s (%s) has timed out', self._system, _this_client['CALLSIGN'], _this_client['RADIO_ID'])
                 # Remove any timed out clients from the configuration
                 del self._CONFIG['SYSTEMS'][self._system]['CLIENTS'][client]
+                break # Prevent "dictionary changed size during iteration"-exception from killing this thread. Process other elements next time.
     
     # Aliased in __init__ to maintenance_loop if system is a client           
     def client_maintenance_loop(self):
