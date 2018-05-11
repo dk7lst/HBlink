@@ -143,7 +143,9 @@ def build_config(_config_file):
                         'IP': gethostbyname(config.get(section, 'IP')),
                         'PORT': config.getint(section, 'PORT'),
                         'PASSPHRASE': config.get(section, 'PASSPHRASE'),
-                        'GROUP_HANGTIME': config.getint(section, 'GROUP_HANGTIME')
+                        'GROUP_HANGTIME': config.getint(section, 'GROUP_HANGTIME'),
+                        'MIN_FREQ': config.getint(section, 'MIN_FREQ'),
+                        'MAX_FREQ': config.getint(section, 'MAX_FREQ'),
                     }})
                     CONFIG['SYSTEMS'][section].update({'CLIENTS': {}})
     

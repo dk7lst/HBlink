@@ -313,7 +313,7 @@ class HBSYSTEM(DatagramProtocol):
                 self.transport.write('MSTNAK'+_radio_id, (_host, _port))
                 self._logger.warning('(%s) Login challenge from Radio ID that has not logged in: %s', self._system, int_id(_radio_id))
 
-        elif _command == 'RPTC':    # Repeater is sending it's configuraiton OR disconnecting
+        elif _command == 'RPTC':    # Repeater is sending it's configuration OR disconnecting
             if _data[:5] == 'RPTCL':    # Disconnect command
                 _radio_id = _data[5:9]
                 if _radio_id in self._clients \
@@ -348,8 +348,13 @@ class HBSYSTEM(DatagramProtocol):
                     _this_client['SOFTWARE_ID'] = _data[222:262]
                     _this_client['PACKAGE_ID'] = _data[262:302]
 
-                    self.send_client(_radio_id, 'RPTACK'+_radio_id)
-                    self._logger.info('(%s) Client %s (%s) has sent repeater configuration', self._system, _this_client['CALLSIGN'], _this_client['RADIO_ID'])
+                    if int(_this_client['RX_FREQ']) >= self._config['MIN_FREQ'] and int(_this_client['RX_FREQ']) <= self._config['MAX_FREQ'] and int(_this_client['TX_FREQ']) >= self._config['MIN_FREQ'] and int(_this_client['TX_FREQ']) <= self._config['MAX_FREQ']:
+                        self.send_client(_radio_id, 'RPTACK'+_radio_id)
+                        self._logger.info('(%s) Client %s (%s) has sent repeater configuration', self._system, _this_client['CALLSIGN'], _this_client['RADIO_ID'])
+                    else:
+                        self.transport.write('MSTNAK'+_radio_id, (_host, _port))
+                        self._logger.warning('(%s) Kicking radio ID %s because of forbidden frequency! (RX: %d TX: %d)', self._system, int_id(_radio_id), int(_this_client['RX_FREQ']), int(_this_client['TX_FREQ']))
+                        del self._clients[_radio_id]
                 else:
                     self.transport.write('MSTNAK'+_radio_id, (_host, _port))
                     self._logger.warning('(%s) Client info from Radio ID that has not logged in: %s', self._system, int_id(_radio_id))
