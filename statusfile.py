@@ -30,7 +30,7 @@ def write(logger, config, systemname, clients):
           + '</td><td align=\"center\">' + esc(c['CALLSIGN'])
           + '</td><td align=\"center\">' + esc(c['IP'])
           + '</td><td>' + abstime(c['LOGIN_TIME']) + '<br><div align=\"center\">' + reltime(c['LAST_PING']) + '</div>'
-          + '</td><td align=\"center\">' + reltime(c['LAST_TX']) + '<br>' + str(c['TX_PACKETS'] * 0.02) + ' sec'
+          + '</td><td align=\"center\">' + reltime(c['LAST_TX']) + '<br>' + str(c['TX_PACKETS'] * 0.06) + ' sec'
           + '</td><td align=\"center\">Rx: ' + qrg(c['RX_FREQ']) + '<br>Tx: ' + qrg(c['TX_FREQ'])
           + '</td><td align=\"center\">S: <code>' + esc(c['SOFTWARE_ID']) + '</code><br>P: <code>' + esc(c['PACKAGE_ID']) + '</code>'
           + '</td></tr>\n')

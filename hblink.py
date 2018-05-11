@@ -232,7 +232,8 @@ class HBSYSTEM(DatagramProtocol):
                 _stream_id = _data[16:20]
                 #self._logger.debug('(%s) DMRD - Seqence: %s, RF Source: %s, Destination ID: %s', self._system, int_id(_seq), int_id(_rf_src), int_id(_dst_id))
 
-                # Increment packet counter:
+                # Update last TX time and packet counter:
+                self._clients[_radio_id]['LAST_TX'] = time()
                 self._clients[_radio_id]['TX_PACKETS'] += 1
 
                 # If AMBE audio exporting is configured...
