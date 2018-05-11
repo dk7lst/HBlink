@@ -232,6 +232,9 @@ class HBSYSTEM(DatagramProtocol):
                 _stream_id = _data[16:20]
                 #self._logger.debug('(%s) DMRD - Seqence: %s, RF Source: %s, Destination ID: %s', self._system, int_id(_seq), int_id(_rf_src), int_id(_dst_id))
 
+                # Increment packet counter:
+                self._clients[_radio_id]['TX_PACKETS'] += 1
+
                 # If AMBE audio exporting is configured...
                 if self._config['EXPORT_AMBE']:
                     self._ambe.parseAMBE(self._system, _data)
@@ -273,6 +276,9 @@ class HBSYSTEM(DatagramProtocol):
                     'URL': '',
                     'SOFTWARE_ID': '',
                     'PACKAGE_ID': '',
+                    'LOGIN_TIME': time(),
+                    'LAST_TX': 0,
+                    'TX_PACKETS': 0,
                 }})
                 self._logger.info('(%s) Repeater Logging in with Radio ID: %s, %s:%s', self._system, int_id(_radio_id), _host, _port)
                 _salt_str = hex_str_4(self._clients[_radio_id]['SALT'])
