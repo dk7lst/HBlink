@@ -1,0 +1,18 @@
+# systemd Autostart Config
+# https://wiki.ubuntuusers.de/systemd/Service_Units/
+# https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files
+# Copy to "/etc/systemd/system", then enable with "systemctl enable hblink.service"
+
+[Unit]
+Description=HBlink Homebrew DMR Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/hblink/run.sh
+WorkingDirectory=/home/hblink
+User=hblink
+Group=hblink
+
+[Install]
+WantedBy=multi-user.target

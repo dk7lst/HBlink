@@ -30,7 +30,7 @@ def write(logger, config, systemname, clients):
     logger.debug('(%s) Updating status file \"%s\".', systemname, filename)
     with open(filename, 'w') as f:
       f.write('<table border=\"1\">\n<tr><td colspan=\"8\" align=\"center\" bgcolor=\"orange\">' + time.asctime() + ': <b>' + esc(systemname) + '</b></td></tr>\n')
-      f.write('<tr align=\"center\" bgcolor=\"yellow\"><td>Radio ID</td><td>ConStat</td><td>Callsign</td><td>IP</td><td>Login Time<br>Last Ping</td><td>Last Tx Time<br>Total Tx Time</td><td>QRG</td><td>Software-Id<br>Package-Id</td></tr>\n')
+      f.write('<tr align=\"center\" bgcolor=\"yellow\"><td>Radio ID</td><td>ConStat</td><td>Callsign</td><td>IP</td><td>Login Time<br>Last Ping</td><td>Last Rx Time<br>Total Rx Time</td><td>QRG</td><td>Software-Id<br>Package-Id</td></tr>\n')
       for client in clients:
         c = clients[client]
         f.write('<tr><td align=\"center\">' + esc(c['RADIO_ID'])
